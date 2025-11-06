@@ -1,0 +1,136 @@
+# 阿里云OSS图床配置文件模板
+# 复制此文件到 ~/.oss_image_bed/config.yaml 并填写实际配置
+
+# ============================================
+# 阿里云OSS配置（必填）
+# ============================================
+aliyun:
+  # AccessKey ID（在阿里云控制台获取）
+  access_key_id: "your-access-key-id"
+  
+  # AccessKey Secret（在阿里云控制台获取）
+  access_key_secret: "your-access-key-secret"
+  
+  # OSS服务区域节点
+  # 常用区域：
+  # - oss-cn-beijing.aliyuncs.com (华北2-北京)
+  # - oss-cn-shanghai.aliyuncs.com (华东2-上海)
+  # - oss-cn-shenzhen.aliyuncs.com (华南1-深圳)
+  # - oss-cn-hangzhou.aliyuncs.com (华东1-杭州)
+  endpoint: "oss-cn-beijing.aliyuncs.com"
+  
+  # Bucket名称
+  bucket_name: "your-bucket-name"
+  
+  # 自定义域名（可选，绑定域名后使用）
+  # 如果不使用自定义域名，留空即可
+  custom_domain: ""
+
+# ============================================
+# 上传配置
+# ============================================
+upload:
+  # 上传路径前缀
+  # 支持变量：{year}年份4位, {month}月份2位, {day}日期2位
+  # 示例：
+  # - "{year}{month}{day}/"     -> 20251105/  (默认，按日期分类)
+  # - "images/{year}/{month}/"  -> images/2025/11/
+  # - "blog/"                   -> blog/
+  # - ""                        -> 根目录
+  path_prefix: "{year}{month}{day}/"
+  
+  # 文件命名规则
+  # - uuid: 使用UUID重命名（推荐，避免重复）
+  # - timestamp: 使用时间戳
+  # - original: 保持原文件名
+  naming_rule: "uuid"
+  
+  # 是否启用MD5去重
+  # true: 相同文件不会重复上传
+  # false: 每次都上传新文件
+  enable_md5_check: true
+  
+  # 并发上传数量（批量上传时）
+  concurrent_limit: 5
+  
+  # 上传失败重试次数
+  retry_times: 3
+  
+  # 支持的图片格式
+  allowed_formats:
+    - ".png"
+    - ".jpg"
+    - ".jpeg"
+    - ".gif"
+    - ".svg"
+    - ".webp"
+    - ".bmp"
+  
+  # 图片最大大小限制（MB）
+  max_size_mb: 10
+
+# ============================================
+# Markdown处理配置
+# ============================================
+markdown:
+  # 是否备份原文件
+  backup_original: true
+  
+  # 备份文件后缀
+  backup_suffix: ".bak"
+  
+  # 默认图片alt文本
+  image_alt_text: "image"
+  
+  # 是否递归处理子文件夹
+  recursive: true
+  
+  # 匹配本地图片的正则表达式
+  # 默认匹配：![xxx](./xxx.png), ![xxx](../xxx.jpg) 等
+  local_image_pattern: '!\[([^\]]*)\]\((?!http)([^)]+)\)'
+
+# ============================================
+# 日志配置
+# ============================================
+logging:
+  # 日志级别：DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: "INFO"
+  
+  # 日志文件路径
+  # ~ 会自动展开为用户主目录
+  file_path: "~/.oss_image_bed/logs/app.log"
+  
+  # 单个日志文件最大大小（MB）
+  max_size_mb: 10
+  
+  # 保留的日志文件数量
+  backup_count: 5
+  
+  # 日志格式
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# ============================================
+# 缓存配置（可选）
+# ============================================
+cache:
+  # 是否启用缓存
+  enabled: true
+  
+  # 缓存文件路径
+  file_path: "~/.oss_image_bed/cache/upload_cache.db"
+  
+  # 缓存过期时间（天）
+  expire_days: 30
+
+# ============================================
+# 代理配置（可选）
+# ============================================
+proxy:
+  # 是否启用代理
+  enabled: false
+  
+  # HTTP代理地址
+  http_proxy: ""
+  
+  # HTTPS代理地址  
+  https_proxy: ""

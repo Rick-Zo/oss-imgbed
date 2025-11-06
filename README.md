@@ -219,7 +219,6 @@ upload:
 
 - 项目主页：https://github.com/xxx/aliyun-oss-image-bed
 - 问题反馈：https://github.com/xxx/aliyun-oss-image-bed/issues
-- 邮箱：support@example.com
 
 ---
 
